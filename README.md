@@ -6,6 +6,6 @@ that ayysense had.
 
 credits to wzn, rifk/czapek, duxe.
 
-apologies to rifk/czapek; i know that you didnt want your sdk public, but at this point 
+apologies to rifk/czapek; i know that you didnt want this public, but at this point 
 i know you don't care about it, and you no longer work on it. this is without the menu
 that ayysense had, so it shouldn't be a big deal.
