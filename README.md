@@ -2,7 +2,7 @@
 
 many of my close friends may know this as ayysense.
 this was the initial sdk, without the menu, aimbot, esp, and everything else
--that ayysense had.
+that ayysense had.
 
 credits to wzn, rifk/czapek, duxe.
 
