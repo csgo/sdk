@@ -7,4 +7,5 @@ ___________________________________________
 -- changed panel in painttraverse[09/10/2018]\
 -- changed vmt to an undetected method[09/10/2018]\
 -- removed unnecessary shit[09/10/2018]
+-- added basic menu[09/10/2018]
 ___________________________________________
