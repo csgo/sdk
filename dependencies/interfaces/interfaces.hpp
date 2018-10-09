@@ -2,7 +2,6 @@
 #include "ibaseclientdll.hpp"
 #include "icliententitylist.hpp"
 #include "ivengineclient.hpp"
-#include "ienginetrace.hpp"
 #include "iclientmode.hpp"
 #include "iclientstate.hpp"
 #include "ipanel.hpp"
@@ -28,7 +27,6 @@ namespace interfaces {
 	extern i_input* input;
 	extern i_client_entity_list* entity_list;
 	extern iv_engine_client* engine;
-	extern i_engine_trace* trace;
 	extern i_client_mode* clientmode;
 	extern i_client_state* clientstate;
 	extern i_panel* panel;

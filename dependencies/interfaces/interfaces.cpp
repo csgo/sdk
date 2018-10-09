@@ -5,7 +5,6 @@ i_base_client_dll* interfaces::client = nullptr;
 i_input* interfaces::input = nullptr;
 i_client_entity_list* interfaces::entity_list = nullptr;
 iv_engine_client* interfaces::engine = nullptr;
-i_engine_trace* interfaces::trace = nullptr;
 i_client_mode* interfaces::clientmode = nullptr;
 i_client_state* interfaces::clientstate = nullptr;
 i_panel* interfaces::panel = nullptr;
@@ -26,7 +25,6 @@ void interfaces::initialize( ) {
 	client = reinterpret_cast< i_base_client_dll* >( utilities::game::capture_interface( "client_panorama.dll", "VClient018" ) );
 	entity_list = reinterpret_cast< i_client_entity_list* >( utilities::game::capture_interface( "client_panorama.dll", "VClientEntityList003" ) );
 	engine = reinterpret_cast< iv_engine_client* >( utilities::game::capture_interface( "engine.dll", "VEngineClient014" ) );
-	trace = reinterpret_cast< i_engine_trace* >( utilities::game::capture_interface( "engine.dll", "EngineTraceClient004" ) );
 	panel = reinterpret_cast< i_panel* >( utilities::game::capture_interface( "vgui2.dll", "VGUI_Panel009" ) );
 	surface = reinterpret_cast< i_surface* >( utilities::game::capture_interface( "vguimatsurface.dll", "VGUI_Surface031" ) );
 	material_system = reinterpret_cast< i_material_system* >( utilities::game::capture_interface( "materialsystem.dll", "VMaterialSystem080" ) );
