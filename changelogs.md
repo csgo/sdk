@@ -6,5 +6,5 @@ ___________________________________________
 -- added renderer bullshit\
 -- changed panel in painttraverse\
 -- changed vmt to an undetected method\
--- removed unnecessary shit\
+-- removed unnecessary shit
 ___________________________________________
