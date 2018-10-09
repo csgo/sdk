@@ -19,19 +19,15 @@ void hooks::initialize( ) {
 
 	client_hook->setup( interfaces::client );
 	client_hook->hook_index( 37, reinterpret_cast< void* >( frame_stage_notify ) );
-	client_hook->apply( );
 
 	clientmode_hook->setup( interfaces::clientmode );
 	clientmode_hook->hook_index( 24, reinterpret_cast< void* >( create_move ) );
-	clientmode_hook->apply( );
 
 	panel_hook->setup( interfaces::panel );
 	panel_hook->hook_index( 41, reinterpret_cast< void* >( paint_traverse ) );
-	panel_hook->apply( );
 
 	renderview_hook->setup( interfaces::render_view );
 	renderview_hook->hook_index( 9, reinterpret_cast< void* >( scene_end ) );
-	renderview_hook->apply( );
 
 	wndproc_original = ( WNDPROC ) SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, ( LONG ) wndproc );
 
@@ -57,6 +53,24 @@ void __stdcall hooks::frame_stage_notify( int frame_stage ) {
 	reinterpret_cast< frame_stage_notify_fn >( client_hook->get_original( 37 ) )( interfaces::client, frame_stage );
 }
 void __stdcall hooks::paint_traverse( unsigned int panel, bool force_repaint, bool allow_force ) {
+	std::string panel_name = interfaces::panel->get_panel_name( panel );
+
+	static unsigned int focus_overlay_panel = 0;
+	static bool once = false;
+
+	if ( !once ) {
+		PCHAR panel_char = ( PCHAR ) interfaces::panel->get_panel_name( panel );
+		if ( strstr( panel_char, "FocusOverlayPanel" ) ) {
+			focus_overlay_panel = panel;
+			once = true;
+		}
+	}
+	else if ( focus_overlay_panel == panel ) {
+		render::get( ).draw_filled_rect( 50, 50, 50, 10, color( 255, 255, 255, 255 ) ); // polish flag
+		render::get( ).draw_filled_rect( 50, 60, 50, 10, color( 255, 0, 0, 255 ) ); // poland owns me and all
+	}
+
+
 	reinterpret_cast< paint_traverse_fn >( panel_hook->get_original( 41 ) )( interfaces::panel, panel, force_repaint, allow_force );
 }
 void __stdcall hooks::scene_end( ) {

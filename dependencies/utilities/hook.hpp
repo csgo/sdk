@@ -1,6 +1,30 @@
 #pragma once
 #include <cstdint>
 #include "../../source-sdk/classes/client_class.hpp"
+#define NOMINMAX
+#include <Windows.h>
+#include <assert.h>
+#include <stdexcept>
+
+namespace detail {
+	class protect_guard {
+	public:
+		protect_guard(void* base, size_t len, std::uint32_t flags) {
+			_base = base;
+			_length = len;
+			if (!VirtualProtect(base, len, flags, (PDWORD) &_old))
+				throw std::runtime_error("failed to protect region.");
+		}
+		~protect_guard() {
+			VirtualProtect(_base, _length, _old, (PDWORD) &_old);
+		}
+
+	private:
+		void*         _base;
+		size_t        _length;
+		std::uint32_t _old;
+	};
+}
 
 class prop_hook {
 private:
@@ -14,18 +38,26 @@ public:
 	recv_var_proxy_fn get_original( );
 };
 
-class vmt_hook {
+class vmt_hook { // thanks oneshot
 private:
-	uintptr_t * * table_pointer;
-	uintptr_t* original_table;
-	uintptr_t* new_table_pointer;
-	size_t estimated_table_size;
+	static inline std::size_t estimate_vftbl_length(std::uintptr_t* vftbl_start);
+
+	void*           class_base;
+	std::size_t     vftbl_len;
+	std::uintptr_t* new_vftb1;
+	std::uintptr_t* old_vftbl;
+	LPCVOID         search_base = nullptr;
+	bool was_allocated = false;
 
 public:
-	void setup( void* class_pointer );
+	uintptr_t * search_free_data_page(const char * module_name, const std::size_t vmt_size);
+	vmt_hook();
+	vmt_hook(void* base);
+	~vmt_hook();
+
+	bool setup(void * base, const char * module_name = nullptr);
 
 	void hook_index( size_t fn_index, void* fn_pointer );
-	void apply( );
 	void release( );
 
 	void* get_original( size_t fn_index );
