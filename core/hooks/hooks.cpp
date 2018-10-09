@@ -3,8 +3,6 @@
 #include "../../dependencies/common_includes.hpp"
 #include <algorithm>
 
-bool renderer_initialized = false;
-
 std::unique_ptr<vmt_hook> hooks::client_hook;
 std::unique_ptr<vmt_hook> hooks::clientmode_hook;
 std::unique_ptr<vmt_hook> hooks::panel_hook;
@@ -55,17 +53,17 @@ void __stdcall hooks::frame_stage_notify( int frame_stage ) {
 void __stdcall hooks::paint_traverse( unsigned int panel, bool force_repaint, bool allow_force ) {
 	std::string panel_name = interfaces::panel->get_panel_name( panel );
 
-	static unsigned int focus_overlay_panel = 0;
+	static unsigned int _panel = 0;
 	static bool once = false;
 
 	if ( !once ) {
 		PCHAR panel_char = ( PCHAR ) interfaces::panel->get_panel_name( panel );
-		if ( strstr( panel_char, "FocusOverlayPanel" ) ) {
-			focus_overlay_panel = panel;
+		if ( strstr( panel_char, "MatSystemTopPanel" ) ) {
+			_panel = panel;
 			once = true;
 		}
 	}
-	else if ( focus_overlay_panel == panel ) {
+	else if ( _panel == panel ) {
 		render::get( ).draw_filled_rect( 50, 50, 50, 10, color( 255, 255, 255, 255 ) ); // polish flag
 		render::get( ).draw_filled_rect( 50, 60, 50, 10, color( 255, 0, 0, 255 ) ); // poland owns me and all
 	}
