@@ -54,6 +54,8 @@ void __stdcall hooks::frame_stage_notify( int frame_stage ) {
 void __stdcall hooks::paint_traverse( unsigned int panel, bool force_repaint, bool allow_force ) {
 	std::string panel_name = interfaces::panel->get_panel_name( panel );
 
+	reinterpret_cast< paint_traverse_fn >( panel_hook->get_original( 41 ) )( interfaces::panel, panel, force_repaint, allow_force );
+
 	static unsigned int _panel = 0;
 	static bool once = false;
 
@@ -67,9 +69,6 @@ void __stdcall hooks::paint_traverse( unsigned int panel, bool force_repaint, bo
 	else if ( _panel == panel ) {
 		menu::get( ).tick( );
 	}
-
-
-	reinterpret_cast< paint_traverse_fn >( panel_hook->get_original( 41 ) )( interfaces::panel, panel, force_repaint, allow_force );
 }
 void __stdcall hooks::scene_end( ) {
 	reinterpret_cast< scene_end_fn >( renderview_hook->get_original( 9 ) )( interfaces::render_view );
