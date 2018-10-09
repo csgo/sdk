@@ -1,5 +1,5 @@
 #pragma once
-
+#include "../menu/menu.hpp"
 #include "../../dependencies/common_includes.hpp"
 #include <algorithm>
 
@@ -33,6 +33,7 @@ void hooks::initialize( ) {
 	interfaces::console->get_convar( "viewmodel_fov" )->callbacks.SetSize( 0 );
 	interfaces::console->get_convar( "mat_postprocess_enable" )->set_value( 0 );
 	interfaces::console->get_convar( "crosshair" )->set_value( 1 );
+	render::get( ).setup_fonts( );
 }
 void hooks::shutdown( ) {
 	clientmode_hook->release( );
@@ -64,8 +65,7 @@ void __stdcall hooks::paint_traverse( unsigned int panel, bool force_repaint, bo
 		}
 	}
 	else if ( _panel == panel ) {
-		render::get( ).draw_filled_rect( 50, 50, 50, 10, color( 255, 255, 255, 255 ) ); // polish flag
-		render::get( ).draw_filled_rect( 50, 60, 50, 10, color( 255, 0, 0, 255 ) ); // poland owns me and all
+		menu::get( ).tick( );
 	}
 
 
