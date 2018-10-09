@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\hooks\hooks.cpp" />
+    <ClCompile Include="core\menu\menu.cpp" />
     <ClCompile Include="dependencies\interfaces\interfaces.cpp" />
     <ClCompile Include="dependencies\utilities\netvars.cpp" />
     <ClCompile Include="dependencies\utilities\render.cpp" />
@@ -137,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\hooks\hooks.hpp" />
+    <ClInclude Include="core\menu\menu.hpp" />
     <ClInclude Include="dependencies\common_includes.hpp" />
     <ClInclude Include="dependencies\interfaces\cglobalvarsbase.hpp" />
     <ClInclude Include="dependencies\interfaces\iclientstate.hpp" />
