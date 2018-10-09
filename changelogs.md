@@ -3,8 +3,8 @@
 
 ___________________________________________
 
--- added renderer bullshit
--- changed panel in painttraverse
--- changed vmt to an undetected method
--- removed unnecessary shit
+______ added renderer bullshit
+______ changed panel in painttraverse
+______ changed vmt to an undetected method
+______ removed unnecessary shit
 ___________________________________________
