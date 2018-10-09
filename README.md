@@ -1,5 +1,13 @@
 # sdk
 
+
+///////////////////////////////////////////
+a clean sdk to start writing a cheat on
+for csgo. this has everything you need for
+a fully featured internal cheat.
+///////////////////////////////////////////
+
+___________________________________________
 many of my close friends may know this as ayysense.
 this was the initial sdk, without the menu, aimbot, esp, and everything else
 that ayysense had.
