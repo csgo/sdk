@@ -40,12 +40,6 @@ public:
 		using original_fn = void( __thiscall* )( iv_engine_client*, int&, int& );
 		return ( *( original_fn** ) this ) [ 5 ]( this, width, height );
 	}
-	bool is_in_game( ) {
-		return true;
-	}
-	bool is_connected( ) {
-		return true;
-	}
 	void execute_cmd( const char* cmd ) {
 		using original_fn = void( __thiscall* )( iv_engine_client*, const char* );
 		return ( *( original_fn** ) this ) [ 108 ]( this, cmd ); // this always seems to crash whilst debugging, just feel free to continue.

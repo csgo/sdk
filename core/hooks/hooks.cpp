@@ -68,6 +68,9 @@ void __stdcall hooks::paint_traverse( unsigned int panel, bool force_repaint, bo
 	}
 	else if ( _panel == panel ) {
 		menu::get( ).tick( );
+		if (menu::get()._get("msc_watermark")) {
+			render::get().draw_text(1, 1, render::get().main_font, "sdk", false, color(255, 255, 255));
+		}
 	}
 }
 void __stdcall hooks::scene_end( ) {

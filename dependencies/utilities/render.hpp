@@ -29,7 +29,7 @@ public: // basic renderer
 		if ( !_o ) {
 			main_font = interfaces::surface->font_create( );
 
-			interfaces::surface->set_font_glyph( main_font, "Verdana", 12, 700, 0, 0, font_flags::fontflag_dropshadow );			
+			interfaces::surface->set_font_glyph( main_font, "Tahoma", 12, 500, 0, 0, font_flags::fontflag_outline );			
 			_o = true;
 		}
 	}
@@ -97,5 +97,18 @@ public: // basic renderer
 		const wchar_t* out = text.c_str( );
 
 		interfaces::surface->get_text_size( font, out, w, h );
+	}
+	vec2_t get_screen_size(vec2_t area)
+	{
+		static int old_w, old_h;
+		interfaces::engine->get_screen_size((int&)area.x, (int&) area.y);
+
+		if ((int&) area.x != old_w || (int&) area.y != old_h)
+		{
+			old_w = (int&) area.x;
+			old_h = (int&) area.y;
+			return vec2_t(old_w, old_h);
+		}
+		return area;
 	}
 };
