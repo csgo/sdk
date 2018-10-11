@@ -33,33 +33,6 @@ public:
 		return m_nAllocationCount;
 	}
 
-	void Grow( int num = 1 ) {
-		if ( IsExternallyAllocated( ) )
-			return;
-
-		int nAllocationRequested = m_nAllocationCount + num;
-		int nNewAllocationCount = UtlMemory_CalcNewAllocationCount( m_nAllocationCount, m_nGrowSize, nAllocationRequested, sizeof( T ) );
-
-		if ( ( int ) ( I ) nNewAllocationCount < nAllocationRequested ) {
-			if ( ( int ) ( I ) nNewAllocationCount == 0 && ( int ) ( I ) ( nNewAllocationCount - 1 ) >= nAllocationRequested )
-				--nNewAllocationCount;
-			else {
-				if ( ( int ) ( I ) nAllocationRequested != nAllocationRequested )
-					return;
-
-				while ( ( int ) ( I ) nNewAllocationCount < nAllocationRequested )
-					nNewAllocationCount = ( nNewAllocationCount + nAllocationRequested ) / 2;
-			}
-		}
-
-		m_nAllocationCount = nNewAllocationCount;
-
-		if ( m_pMemory )
-			m_pMemory = ( T* ) g_pMemAlloc->Realloc( m_pMemory, m_nAllocationCount * sizeof( T ) );
-		else
-			m_pMemory = ( T* ) g_pMemAlloc->Alloc( m_nAllocationCount * sizeof( T ) );
-	}
-
 	bool IsExternallyAllocated( ) const {
 		return m_nGrowSize < 0;
 	}
