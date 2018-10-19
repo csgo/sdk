@@ -44,7 +44,12 @@ void hooks::shutdown( ) {
 	SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, ( LONG ) wndproc_original );
 }
 bool __stdcall hooks::create_move( float frame_time, c_usercmd* user_cmd ) {
-	reinterpret_cast< create_move_fn >( clientmode_hook->get_original( 24 ) )( interfaces::clientmode, frame_time, user_cmd );
+	static auto og = reinterpret_cast< create_move_fn >( clientmode_hook->get_original( 24 ) )( interfaces::clientmode, frame_time, user_cmd );
+	if (!user_cmd || !user_cmd->command_number)
+		return og;
+
+	if (!interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()))
+		return og;
 	return false;
 }
 
