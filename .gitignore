@@ -1,0 +1,16 @@
+
+\.vs/csgo-cheat/v16/
+
+intermediates/csgo-cheat\.tlog/CL\.command\.1\.tlog
+
+*.log
+
+intermediates/csgo-cheat\.tlog/
+
+*.idb
+
+*.pdb
+
+*.obj
+
+output/debug/

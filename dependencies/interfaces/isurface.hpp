@@ -15,9 +15,9 @@ public:
 		using original_fn = void( __thiscall* )( i_surface*, int, vertex_t*, bool );
 		return ( *( original_fn** ) this )[ 106 ]( this, n, vertice, clip_vertices );
 	}
-	void draw_filled_rectangle( int x, int y, int w, int h ) {
+	void draw_filled_rectangle( int x, int y, int x1, int y1 ) {
 		using original_fn = void( __thiscall* )( i_surface*, int, int, int, int );
-		return ( *( original_fn** ) this )[ 16 ]( this, x, y, x + w, y + h );
+		return ( *( original_fn** ) this )[ 16 ]( this, x, y, x + x1, y + y1 );
 	}
 	void set_texture( int id ) {
 		using original_fn = void( __thiscall* )( i_surface*, int );
@@ -31,9 +31,9 @@ public:
 		using original_fn = int( __thiscall* )( i_surface*, bool );
 		return ( *( original_fn** ) this )[ 43 ]( this, procedural );
 	}
-	void draw_outlined_rect( int x, int y, int w, int h ) {
+	void draw_outlined_rect( int x, int y, int x1, int y1 ) {
 		using original_fn = void( __thiscall* )( i_surface*, int, int, int, int );
-		return ( *( original_fn** ) this )[ 18 ]( this, x, y, x + w, y + h );
+		return ( *( original_fn** ) this )[ 18 ]( this, x, y, x + x1, y+y1);
 	}
 	void draw_line( int x1, int y1, int x2, int y2 ) {
 		using original_fn = void( __thiscall* )( i_surface*, int, int, int, int );
