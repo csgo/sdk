@@ -11,7 +11,7 @@ void menu::render() {
 	zgui::poll_input("Counter-Strike: Global Offensive");
 
 	//	could add an if statement but whatever
-	if (zgui::begin_window("sdk for counter-strike: global offensive", { 500, 350 }, render::get().main_font)) {
+	if (zgui::begin_window("sdk for counter-strike: global offensive", { 500, 350 }, render::main_font)) {
 		zgui::begin_groupbox("Example groupbox", { 468, 311 }); {
 			zgui::checkbox("Example checkbox", checkbox);
 			zgui::slider_float("Example slider (float)", 0.0f, 100.0f, sliderf);

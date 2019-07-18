@@ -117,8 +117,6 @@ namespace zgui {
 	struct multi_select_item { std::string_view name; bool* value; };
 	// Two dimensional vector.
 	struct vec2 { float x, y; };
-	// Color with 4 paremeters; red, green, blue and alpha.
-	struct color { int r, g, b, a; };
 
 	/// "Proxy" functions definitions.
 	

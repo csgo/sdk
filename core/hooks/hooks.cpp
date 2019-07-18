@@ -9,50 +9,6 @@ std::unique_ptr<vmt_hook> hooks::panel_hook;
 std::unique_ptr<vmt_hook> hooks::renderview_hook;
 WNDPROC hooks::wndproc_original = NULL;
 
-// the current location of these rendering functions is temporary, i'll move them to somewhere appropriate later.
-void line(int x, int y, int x2, int y2, zgui::color c) noexcept {
-	interfaces::surface->set_drawing_color(c.r, c.g, c.b, c.a);
-	interfaces::surface->draw_line(x, y, x2, y2);
-}
-
-void rect(int x, int y, int x2, int y2, zgui::color c) noexcept {
-	interfaces::surface->set_drawing_color(c.r, c.g, c.b, c.a);
-	interfaces::surface->draw_outlined_rect(x, y, x2, y2);
-}
-
-void filled_rect(int x, int y, int x2, int y2, zgui::color c) noexcept {
-	interfaces::surface->set_drawing_color(c.r, c.g, c.b, c.a);
-	interfaces::surface->draw_filled_rectangle(x, y, x2, y2);
-}
-
-void text(int x, int y, zgui::color color, int font, bool center, std::string str) noexcept {
-	std::wstring text = std::wstring(str.begin(), str.end());
-	const wchar_t* converted_text = text.c_str();
-
-	int width, height;
-	interfaces::surface->get_text_size(font, converted_text, width, height);
-
-	interfaces::surface->set_text_color(color.r, color.g, color.b, color.a);
-	interfaces::surface->draw_text_font(font);
-	if (center)
-		interfaces::surface->draw_text_pos(x - (width / 2), y);
-	else
-		interfaces::surface->draw_text_pos(x, y);
-
-	interfaces::surface->draw_render_text(converted_text, wcslen(converted_text));
-}
-
-void get_text_size(unsigned long font, std::string str, int& width, int& height) noexcept {
-	std::wstring text = std::wstring(str.begin(), str.end());
-	const wchar_t* out = text.c_str();
-
-	interfaces::surface->get_text_size(font, out, width, height);
-}
-
-float get_frametime() noexcept {
-	return interfaces::globals->frame_time;
-}
-
 void hooks::initialize( ) {
 	client_hook = std::make_unique<vmt_hook>( );
 	clientmode_hook = std::make_unique<vmt_hook>( );
@@ -78,14 +34,14 @@ void hooks::initialize( ) {
 	interfaces::console->get_convar( "mat_postprocess_enable" )->set_value( 0 );
 	interfaces::console->get_convar( "crosshair" )->set_value( 1 );
 
-	render::get( ).setup_fonts( );
+	render::setup_fonts( );
 
-	zgui::functions.draw_line = line;
-	zgui::functions.draw_rect = rect;
-	zgui::functions.draw_filled_rect = filled_rect;
-	zgui::functions.draw_text = text;
-	zgui::functions.get_text_size = get_text_size;
-	zgui::functions.get_frametime = get_frametime;
+	zgui::functions.draw_line = render::line;
+	zgui::functions.draw_rect = render::rect;
+	zgui::functions.draw_filled_rect = render::filled_rect;
+	zgui::functions.draw_text = render::text;
+	zgui::functions.get_text_size = render::get_text_size;
+	zgui::functions.get_frametime = render::get_frametime;
 }
 
 void hooks::shutdown( ) {
