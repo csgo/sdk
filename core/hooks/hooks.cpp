@@ -9,6 +9,7 @@ std::unique_ptr<vmt_hook> hooks::panel_hook;
 std::unique_ptr<vmt_hook> hooks::renderview_hook;
 WNDPROC hooks::wndproc_original = NULL;
 
+// the current location of these rendering functions is temporary, i'll move them to somewhere appropriate later.
 void line(int x, int y, int x2, int y2, zgui::color c) noexcept {
 	interfaces::surface->set_drawing_color(c.r, c.g, c.b, c.a);
 	interfaces::surface->draw_line(x, y, x2, y2);
@@ -51,7 +52,6 @@ void get_text_size(unsigned long font, std::string str, int& width, int& height)
 float get_frametime() noexcept {
 	return interfaces::globals->frame_time;
 }
-
 
 void hooks::initialize( ) {
 	client_hook = std::make_unique<vmt_hook>( );
