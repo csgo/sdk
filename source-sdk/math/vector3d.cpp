@@ -1,4 +1,5 @@
 #include "vector3d.hpp"
+#include <cmath>
 
 vec3_t::vec3_t( void ) {
 	x = y = z = 0.0f;
