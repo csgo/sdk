@@ -1,6 +1,5 @@
 # sdk
 
-
 ___________________________________________
 a clean sdk to start writing a cheat on
 for csgo. this has everything you need for
