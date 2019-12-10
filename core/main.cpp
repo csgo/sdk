@@ -8,7 +8,7 @@ unsigned long __stdcall initial_thread(void* reserved) {
     freopen_s(reinterpret_cast<FILE * *>stdout, "CONOUT$", "w", stdout);
 
     interfaces::initialize();
-
+    netvar_manager::get().initialize(interfaces::client->get_client_classes());
     hooks::initialize();
 
     while (!GetAsyncKeyState(VK_END))
