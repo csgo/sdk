@@ -23,10 +23,11 @@ unsigned long __stdcall initial_thread( void* reserved ) {
 	return 0ul;
 }
 
-bool __stdcall DllMain( void* instance, unsigned long reason_to_call, void* reserved ) {
+BOOL __stdcall DllMain( const void* instance, const unsigned long reason_to_call, const void* reserved ) {
 	if ( reason_to_call == DLL_PROCESS_ATTACH ) {
-		CreateThread( 0, 0, initial_thread, instance, 0, 0 );
+		if ( const auto handle = CreateThread( 0, 0, initial_thread, instance, 0, 0 ) )
+			CloseHandle( handle );
 	}
 
-	return true;
+	return TRUE;
 }
