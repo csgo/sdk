@@ -1,5 +1,4 @@
 #pragma once
-#include "singleton.hpp"
 #include "fnv.hpp"
 
 #include "../../source-sdk/classes/recv_props.hpp"
@@ -10,7 +9,7 @@
 #include <map>
 #include <fstream>
 
-class netvar_manager : public singleton<netvar_manager> {
+class netvar_manager {
 private:
 	std::map<unsigned int, recv_prop*> netvars_map;
 	void dump_table_recursive( recv_table* table );
@@ -24,6 +23,8 @@ public:
 	recv_prop* get_prop( unsigned int hash );
 };
 
+extern netvar_manager g_netvar_mgr;
+
 #define offset_fn(type, var, offset) \
 	type& var() { \
 		return *(type*)(uintptr_t(this) + offset); \
@@ -31,19 +32,19 @@ public:
 
 #define netvar_fn(type, var, hash) \
 	type& var() { \
-		static auto _offset = netvar_manager::get().get_offset(fnv_hash(hash)); \
+		static auto _offset = g_netvar_mgr.get_offset(fnv_hash(hash)); \
 		return *(type*)(uintptr_t(this) + _offset); \
 	} \
 
 #define netvar_ptr_fn(type, var, hash) \
 	type* var() { \
-		static auto _offset = netvar_manager::get().get_offset(fnv_hash(hash)); \
+		static auto _offset = g_netvar_mgr.get_offset(fnv_hash(hash)); \
 		return (type*)(uintptr_t(this) + _offset); \
 	} \
 
 #define netvar_offset_fn(type, var, hash, offset) \
 	type& var() { \
-		static auto _offset = netvar_manager::get().get_offset(fnv_hash(hash)); \
+		static auto _offset = g_netvar_mgr.get_offset(fnv_hash(hash)); \
 		return *(type*)(uintptr_t(this) + _offset + offset); \
 	} \
 

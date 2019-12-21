@@ -2,6 +2,8 @@
 #include <sstream>
 #include <iomanip>
 
+netvar_manager g_netvar_mgr;
+
 void netvar_manager::dump_table_recursive( recv_table* table ) {
 	for ( auto i = 0; i < table->props_count; ++i ) {
 		auto prop = &table->props [ i ];

@@ -18,7 +18,6 @@
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
 
-#include "utilities/singleton.hpp"
 #include "utilities/fnv.hpp"
 #include "utilities/utilities.hpp"
 #include "utilities/render.hpp"

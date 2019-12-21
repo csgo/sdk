@@ -27,9 +27,8 @@ void hooks::initialize( ) {
 	renderview_hook->setup( interfaces::render_view );
 	renderview_hook->hook_index( 9, reinterpret_cast< void* >( scene_end ) );
 
-	wndproc_original = ( WNDPROC ) SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, ( LONG ) wndproc );
+	wndproc_original = reinterpret_cast< WNDPROC >( SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, reinterpret_cast< LONG >( wndproc ) ) );
 
-	interfaces::console->get_convar( "mat_queue_mode" )->set_value( 0 );
 	interfaces::console->get_convar( "viewmodel_fov" )->callbacks.SetSize( 0 );
 	interfaces::console->get_convar( "mat_postprocess_enable" )->set_value( 0 );
 	interfaces::console->get_convar( "crosshair" )->set_value( 1 );
@@ -45,20 +44,21 @@ void hooks::initialize( ) {
 }
 
 void hooks::shutdown( ) {
-	clientmode_hook->release( );
 	client_hook->release( );
+	clientmode_hook->release( );
 	panel_hook->release( );
 	renderview_hook->release( );
 
-	SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, ( LONG ) wndproc_original );
+	SetWindowLongPtrA( FindWindow( "Valve001", NULL ), GWL_WNDPROC, reinterpret_cast< LONG >( wndproc_original ) );
 }
 
 bool __stdcall hooks::create_move( float frame_time, c_usercmd* user_cmd ) {
 	static auto original_fn = reinterpret_cast< create_move_fn >( clientmode_hook->get_original( 24 ) )( interfaces::clientmode, frame_time, user_cmd );
-	if (!user_cmd || !user_cmd->command_number)
+	
+	if ( !user_cmd || !user_cmd->command_number )
 		return original_fn;
 
-	if (!interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()))
+	if ( !interfaces::entity_list->get_client_entity( interfaces::engine->get_local_player( ) ) )
 		return original_fn;
 
 	return false;
@@ -77,14 +77,14 @@ void __stdcall hooks::paint_traverse( unsigned int panel, bool force_repaint, bo
 	static bool once = false;
 
 	if ( !once ) {
-		PCHAR panel_char = ( PCHAR ) interfaces::panel->get_panel_name( panel );
+		char* panel_char = ( char* )( interfaces::panel->get_panel_name( panel ) );
 		if ( strstr( panel_char, "MatSystemTopPanel" ) ) {
 			_panel = panel;
 			once = true;
 		}
 	}
 	else if ( _panel == panel ) {
-		menu::render();
+		g_menu.render( );
 	}
 }
 

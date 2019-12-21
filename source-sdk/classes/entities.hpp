@@ -34,6 +34,7 @@ enum entity_flags {
 	fl_transragdoll = ( 1 << 29 ),
 	fl_unblockable_by_player = ( 1 << 30 )
 };
+
 enum item_definition_indexes {
 	item_none = 0,
 	weapon_deagle = 1,
@@ -91,55 +92,63 @@ enum item_definition_indexes {
 	weapon_knife_dagger = 516,
 	weapon_max
 };
+
 class entity_t {
 public:
 	void* animating( ) {
 		return reinterpret_cast< void* >( uintptr_t( this ) + 0x4 );
 	}
+
 	void* networkable( ) {
 		return reinterpret_cast< void* >( uintptr_t( this ) + 0x8 );
 	}
+
 	collideable_t* collideable( ) {
 		using original_fn = collideable_t * ( __thiscall* )( void* );
 		return ( *( original_fn** ) this )[ 3 ]( this );
 	}
+
 	client_class* clientclass( ) {
 		using original_fn = client_class * ( __thiscall* )( void* );
 		return ( *( original_fn** ) networkable( ) )[ 2 ]( networkable( ) );
 	}
+
 	bool is_player( ) {
 		using original_fn = bool( __thiscall* )( entity_t* );
 		return ( *( original_fn** ) this )[ 152 ]( this );
 	}
+
 	bool is_weapon( ) {
 		using original_fn = bool( __thiscall* )( entity_t* );
 		return ( *( original_fn** ) this )[ 160 ]( this );
 	}
-	bool setup_bones( matrix_t* out, int max_bones, int mask, float time ) {
-		if ( !this ) {
-			return false;
-		}
 
+	bool setup_bones( matrix_t* out, int max_bones, int mask, float time ) {
 		using original_fn = bool( __thiscall* )( void*, matrix_t*, int, int, float );
 		return ( *( original_fn** ) animating( ) )[ 13 ]( animating( ), out, max_bones, mask, time );
 	}
+
 	model_t* model( ) {
 		using original_fn = model_t * ( __thiscall* )( void* );
 		return ( *( original_fn** ) animating( ) )[ 8 ]( animating( ) );
 	}
+
 	void update( ) {
 		using original_fn = void( __thiscall* )( entity_t* );
 		( *( original_fn** ) this )[ 218 ]( this );
 	}
+
 	int draw_model( int flags, uint8_t alpha ) {
 		using original_fn = int( __thiscall* )( void*, int, uint8_t );
 		return ( *( original_fn** ) animating( ) )[ 9 ]( animating( ), flags, alpha );
 	}
+
 	void set_angles( vec3_t angles ) {
 		using original_fn = void( __thiscall* )( void*, const vec3_t& );
 		static original_fn set_angles_fn = ( original_fn ) ( ( DWORD ) utilities::pattern_scan( GetModuleHandleA( "client_panorama.dll" ), "55 8B EC 83 E4 F8 83 EC 64 53 56 57 8B F1" ) );
 		set_angles_fn( this, angles );
 	}
+
 	void set_position( vec3_t position ) {
 		using original_fn = void( __thiscall* )( void*, const vec3_t& );
 		static original_fn set_position_fn = ( original_fn ) ( ( DWORD ) utilities::pattern_scan( GetModuleHandleA( "client_panorama.dll" ), "55 8B EC 83 E4 F8 51 53 56 57 8B F1 E8" ) );
@@ -172,16 +181,19 @@ public:
 
 	float get_innacuracy( ) {
 		using original_fn = float( __thiscall* )( void* );
-		return ( *( original_fn** ) this )[ 467 ]( this );
+		return ( *( original_fn** ) this )[ 479 ]( this );
 	}
+
 	float get_spread( ) {
 		using original_fn = float( __thiscall* )( void* );
-		return ( *( original_fn** ) this )[ 436 ]( this );
+		return ( *( original_fn** ) this )[ 449 ]( this );
 	}
-	void update_accuracy_penatly( ) {
+
+	void update_accuracy_penalty( ) {
 		using original_fn = void( __thiscall* )( void* );
-		( *( original_fn** ) this )[ 468 ]( this );
+		( *( original_fn** ) this )[ 480 ]( this );
 	}
+
 	weapon_info_t* get_weapon_data( ) {
 		using original_fn = weapon_info_t * ( __thiscall* )( void* );
 		static original_fn return_func = ( original_fn ) ( ( DWORD ) utilities::pattern_scan( GetModuleHandleA( "client_panorama.dll" ), "55 8B EC 81 EC ? ? ? ? 53 8B D9 56 57 8D 8B" ) );
@@ -189,6 +201,7 @@ public:
 		return return_func( this );
 
 	}
+
 	bool is_knife( ) {
 		return clientclass( )->class_id == cknife || clientclass( )->class_id == cknifegg;
 	}
@@ -196,13 +209,13 @@ public:
 
 class econ_view_item_t {
 public:
-	netvar_offset_fn( bool, is_initialized, "DT_ScriptCreatedItem->m_bInitialized", netvar_manager::get( ).get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + netvar_manager::get( ).get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
-	netvar_offset_fn( short, item_definition_index, "DT_ScriptCreatedItem->m_iItemDefinitionIndex", netvar_manager::get( ).get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + netvar_manager::get( ).get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
-	netvar_offset_fn( int, entity_level, "DT_ScriptCreatedItem->m_iEntityLevel", netvar_manager::get( ).get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + netvar_manager::get( ).get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
-	netvar_offset_fn( int, account_id, "DT_ScriptCreatedItem->m_iAccountID", netvar_manager::get( ).get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + netvar_manager::get( ).get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
-	netvar_offset_fn( int, item_id_low, "DT_ScriptCreatedItem->m_iItemIDLow", netvar_manager::get( ).get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + netvar_manager::get( ).get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
-	netvar_offset_fn( int, item_id_high, "DT_ScriptCreatedItem->m_iItemIDHigh", netvar_manager::get( ).get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + netvar_manager::get( ).get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
-	netvar_offset_fn( int, entity_quality, "DT_ScriptCreatedItem->m_iEntityQuality", netvar_manager::get( ).get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + netvar_manager::get( ).get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
+	netvar_offset_fn( bool, is_initialized, "DT_ScriptCreatedItem->m_bInitialized", g_netvar_mgr.get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + g_netvar_mgr.get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
+	netvar_offset_fn( short, item_definition_index, "DT_ScriptCreatedItem->m_iItemDefinitionIndex", g_netvar_mgr.get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + g_netvar_mgr.get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
+	netvar_offset_fn( int, entity_level, "DT_ScriptCreatedItem->m_iEntityLevel", g_netvar_mgr.get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + g_netvar_mgr.get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
+	netvar_offset_fn( int, account_id, "DT_ScriptCreatedItem->m_iAccountID", g_netvar_mgr.get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + g_netvar_mgr.get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
+	netvar_offset_fn( int, item_id_low, "DT_ScriptCreatedItem->m_iItemIDLow", g_netvar_mgr.get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + g_netvar_mgr.get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
+	netvar_offset_fn( int, item_id_high, "DT_ScriptCreatedItem->m_iItemIDHigh", g_netvar_mgr.get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + g_netvar_mgr.get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
+	netvar_offset_fn( int, entity_quality, "DT_ScriptCreatedItem->m_iEntityQuality", g_netvar_mgr.get_offset( fnv_hash( "DT_AttributeContainer->m_Item" ) ) + g_netvar_mgr.get_offset( fnv_hash( "DT_BaseAttributableItem->m_AttributeManager" ) ) );
 };
 
 class attributable_item_t : public entity_t {
@@ -243,11 +256,11 @@ public:
 	netvar_fn( unsigned long, observer_target, "DT_BasePlayer->m_hObserverTarget" );
 	netvar_fn( unsigned long, active_weapon_handle, "DT_BaseCombatCharacter->m_hActiveWeapon" );
 
-
 	weapon_t* active_weapon( void ) {
 		uintptr_t handle = active_weapon_handle( );
 		return ( weapon_t* ) interfaces::entity_list->get_client_entity( handle );
 	}
+
 	int* weapons( ) {
 		return ( int* ) ( uintptr_t( this ) + 0x2DE8 );
 	}

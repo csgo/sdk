@@ -38,7 +38,7 @@ public:
 	recv_var_proxy_fn get_original( );
 };
 
-class vmt_hook { // thanks oneshot
+class vmt_hook {
 private:
 	static inline std::size_t estimate_vftbl_length(std::uintptr_t* vftbl_start);
 

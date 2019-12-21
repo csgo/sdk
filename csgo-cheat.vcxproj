@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{AF041675-F00D-4A72-B40F-78D0C4BB72D9}</ProjectGuid>
     <RootNamespace>ayysense</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <ProjectName>csgo-cheat</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -165,7 +165,6 @@
     <ClInclude Include="dependencies\utilities\fnv.hpp" />
     <ClInclude Include="dependencies\utilities\netvars.hpp" />
     <ClInclude Include="dependencies\utilities\render.hpp" />
-    <ClInclude Include="dependencies\utilities\singleton.hpp" />
     <ClInclude Include="dependencies\utilities\utilities.hpp" />
     <ClInclude Include="dependencies\utilities\hook.hpp" />
     <ClInclude Include="source-sdk\classes\client_class.hpp" />
