@@ -19,6 +19,10 @@ unsigned long __stdcall initial_thread( void* reserved ) {
 	hooks::shutdown( );
 	std::this_thread::sleep_for( std::chrono::milliseconds( 100 ) );
 
+	fclose(reinterpret_cast<FILE*>stdin);
+	fclose(reinterpret_cast<FILE*>stdout);
+	FreeConsole();
+
 	FreeLibraryAndExitThread( reinterpret_cast< HMODULE >( reserved ), 0 );
 	return 0ul;
 }
