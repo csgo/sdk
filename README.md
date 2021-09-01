@@ -1,17 +1,22 @@
-# sdk
+# CSGO SDK
 
-___________________________________________
-a clean sdk to start writing a cheat on
+A clean sdk to start writing a cheat on
 for csgo. this has everything you need for
-a fully featured internal cheat.
+a fully featured internal cheat. 
+ 
+### Credits
+Base code credits goes to: wzn, rifk/czapek, duxe, alphauc, csAlphyy, laine.  
+ 
+# Updates by me
 
-___________________________________________
-many of my close friends may know this as ayysense.
-this was the initial sdk, without the menu, aimbot, esp, and everything else
-that ayysense had.
+### Changelog  
+- Updated interfaces/patterscans 09/01/2020 (Sep. 1st 2020)
+ 
+### Status
+  
+- Injection: working!  
+- Vacban: don't know?  
+  
+## Injector  
 
-credits to wzn, rifk/czapek, duxe.
-
-apologies to rifk/czapek; i know that you didnt want this public, but at this point 
-i know you don't care about it, and you no longer work on it. this is without the menu
-that ayysense had, so it shouldn't be a big deal.
+Using CSGhost (v4.2.1) from unknowncheats.me
