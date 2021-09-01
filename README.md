@@ -1,5 +1,7 @@
 # CSGO SDK
-
+  
+![preview](preview.png)  
+  
 A clean sdk to start writing a cheat on
 for csgo. this has everything you need for
 a fully featured internal cheat. 
