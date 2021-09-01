@@ -13,11 +13,15 @@ unsigned long __stdcall initial_thread( void* reserved ) {
 
 	hooks::initialize( );
 
-	while ( !GetAsyncKeyState( VK_END ) )
+	while ( !GetAsyncKeyState( VK_DELETE ) )
 		std::this_thread::sleep_for( std::chrono::milliseconds( 50 ) );
 
 	hooks::shutdown( );
 	std::this_thread::sleep_for( std::chrono::milliseconds( 100 ) );
+
+	std::cout << "GOOD BY, YOU CAN CLOSE THIS WINDOW NOW!" << std::endl;
+
+	FreeConsole();
 
 	FreeLibraryAndExitThread( reinterpret_cast< HMODULE >( reserved ), 0 );
 	return 0ul;
